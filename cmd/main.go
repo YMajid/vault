@@ -7,17 +7,15 @@ import (
 )
 
 func main() {
-	v := vault.MemoryVault("my-fake-key")
-	err := v.Set("demo_key", "some crazy value")
-	if err != nil {
-		panic(err)
-	}
+	v := vault.File("my-fake-key", ".secrets")
+	_ = v.Set("demo_key_1", "123some crazy value")
+	_ = v.Set("demo_key_2", "some 123crazy value")
+	_ = v.Set("demo_key_3", "some crazy 123value")
 
-	plain, err := v.Get("demo_key")
-	if err != nil {
-		panic(err)
-	}
-
+	plain, _ := v.Get("demo_key_1")
 	fmt.Println("Plain: ", plain)
-
+	plain, _ = v.Get("demo_key_2")
+	fmt.Println("Plain: ", plain)
+	plain, _ = v.Get("demo_key_3")
+	fmt.Println("Plain: ", plain)
 }
